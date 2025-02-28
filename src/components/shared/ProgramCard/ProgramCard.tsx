@@ -1,6 +1,7 @@
 import { Title } from '@/components/ui/Title'
 import React, { FC } from 'react'
 import { ModuleCards, ModuleCardWrapper, ModuleSubject, ModuleSubjectsList, ModuleTitle, ProgramCardWrapper } from './styled'
+import { Accordion } from '@/components/ui/Accordion/Accordion'
 
 export type Program = {
   id: number
@@ -28,26 +29,42 @@ export const ProgramCard: FC<Program> = (props) => {
     },
   ]
   return (
-    <ProgramCardWrapper>
-      <Title as="h2">
-        {props.title}
-      </Title>
-      <ModuleCards>
-        {modules.map(el =>
-          <ModuleCardWrapper key={el.id}>
-            <ModuleTitle>
-              {el.module}
-            </ModuleTitle>
-            <ModuleSubjectsList>
-              {el.subjects.map(item =>
-                <ModuleSubject key={item.id}>
-                  {item.title}
-                </ModuleSubject>)}
-            </ModuleSubjectsList>
-          </ModuleCardWrapper>)}
-      </ModuleCards>
 
-    </ProgramCardWrapper>
+      <ProgramCardWrapper>
+        <Title as="h2">
+          {props.title}
+        </Title>
+
+        <ModuleCards>
+          {modules.map(el =>
+
+            <ModuleCardWrapper key={el.id}>
+              <ModuleTitle>
+                {el.module}
+              </ModuleTitle>
+              <ModuleSubjectsList>
+                {el.subjects.map(item =>
+                  <ModuleSubject key={item.id}>
+                    {item.title}
+                  </ModuleSubject>)}
+              </ModuleSubjectsList>
+            </ModuleCardWrapper>
+          )}
+        </ModuleCards>
+
+        {modules.map(el =>
+        <Accordion title={el.module} key={el.id}>
+          <ModuleSubjectsList>
+            {el.subjects.map(item =>
+              <ModuleSubject key={item.id}>
+                {item.title}
+              </ModuleSubject>)}
+          </ModuleSubjectsList>
+        </Accordion>
+      )}
+
+      </ProgramCardWrapper>
+
   )
 }
 
